@@ -1,21 +1,26 @@
 import { motion } from "framer-motion";
-import GlassCard from "@/components/GlassCard";
 
 const QRScanner = () => (
-  <div className="p-8 space-y-8 max-w-4xl mx-auto">
-    <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-      <h1 className="text-3xl font-bold text-foreground mb-2">
-        QR Code <span className="text-primary neon-text">Scanner</span>
+  <div className="p-8 lg:p-12 max-w-3xl mx-auto">
+    <motion.div initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
+      <h1 className="font-display text-4xl font-extrabold text-foreground tracking-tight mb-2">
+        QR <span className="text-accent-primary">Scanner</span>
       </h1>
-      <p className="text-muted-foreground">Upload a QR code image to extract and analyze the URL</p>
+      <p className="text-muted-foreground">Upload a QR code to extract and scan the embedded URL</p>
     </motion.div>
-    <GlassCard delay={0.1}>
-      <div className="border-2 border-dashed border-border rounded-2xl p-16 text-center hover:border-primary/30 transition-colors cursor-pointer">
-        <div className="text-5xl mb-4">📱</div>
-        <p className="text-foreground font-medium mb-1">Drop QR code image here</p>
-        <p className="text-sm text-muted-foreground">or click to browse files</p>
+    <motion.div
+      className="surface p-8 border-2 border-dashed border-border hover:border-primary/20 transition-colors cursor-pointer text-center"
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.1 }}
+      whileHover={{ scale: 1.01 }}
+    >
+      <div className="py-12 space-y-3">
+        <p className="text-4xl">⊞</p>
+        <p className="text-foreground font-medium">Drop image here or click to browse</p>
+        <p className="text-xs text-muted-foreground">PNG, JPG up to 10MB</p>
       </div>
-    </GlassCard>
+    </motion.div>
   </div>
 );
 
