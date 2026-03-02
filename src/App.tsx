@@ -11,6 +11,7 @@ import QRScanner from "./pages/QRScanner";
 import ScanHistory from "./pages/ScanHistory";
 import Monitoring from "./pages/Monitoring";
 import MISPSettings from "./pages/MISPSettings";
+import SandboxReport from "./pages/SandboxReport";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/history" element={<ScanHistory />} />
             <Route path="/monitoring" element={<Monitoring />} />
             <Route path="/misp" element={<MISPSettings />} />
+            <Route path="/sandbox" element={<SandboxReport />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AppLayout>

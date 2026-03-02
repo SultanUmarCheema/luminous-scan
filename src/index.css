@@ -6,47 +6,47 @@
 
 @layer base {
   :root {
-    --background: 240 6% 4%;
-    --foreground: 60 10% 92%;
+    --background: 240 8% 3%;
+    --foreground: 210 20% 93%;
 
-    --card: 240 5% 7%;
-    --card-foreground: 60 10% 92%;
+    --card: 240 7% 6%;
+    --card-foreground: 210 20% 93%;
 
-    --popover: 240 5% 7%;
-    --popover-foreground: 60 10% 92%;
+    --popover: 240 7% 6%;
+    --popover-foreground: 210 20% 93%;
 
-    --primary: 72 100% 50%;
-    --primary-foreground: 240 6% 4%;
+    --primary: 190 100% 50%;
+    --primary-foreground: 240 8% 3%;
 
-    --secondary: 240 4% 12%;
-    --secondary-foreground: 60 10% 92%;
+    --secondary: 240 6% 10%;
+    --secondary-foreground: 210 20% 93%;
 
-    --muted: 240 4% 10%;
-    --muted-foreground: 240 4% 44%;
+    --muted: 240 5% 9%;
+    --muted-foreground: 240 5% 42%;
 
-    --accent: 0 0% 100%;
-    --accent-foreground: 240 6% 4%;
+    --accent: 265 90% 65%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 56%;
-    --destructive-foreground: 60 10% 92%;
+    --destructive-foreground: 210 20% 93%;
 
-    --status-safe: 152 70% 48%;
+    --status-safe: 160 75% 46%;
     --status-warning: 40 96% 56%;
 
-    --border: 240 4% 12%;
-    --input: 240 4% 12%;
-    --ring: 72 100% 50%;
+    --border: 240 5% 11%;
+    --input: 240 5% 11%;
+    --ring: 190 100% 50%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 240 6% 5%;
-    --sidebar-foreground: 60 10% 92%;
-    --sidebar-primary: 72 100% 50%;
-    --sidebar-primary-foreground: 240 6% 4%;
-    --sidebar-accent: 240 4% 10%;
-    --sidebar-accent-foreground: 60 10% 92%;
-    --sidebar-border: 240 4% 12%;
-    --sidebar-ring: 72 100% 50%;
+    --sidebar-background: 240 8% 4%;
+    --sidebar-foreground: 210 20% 93%;
+    --sidebar-primary: 190 100% 50%;
+    --sidebar-primary-foreground: 240 8% 3%;
+    --sidebar-accent: 240 5% 9%;
+    --sidebar-accent-foreground: 210 20% 93%;
+    --sidebar-border: 240 5% 11%;
+    --sidebar-ring: 190 100% 50%;
   }
 }
 
@@ -69,29 +69,43 @@
     font-family: 'JetBrains Mono', monospace;
   }
 
-  /* Refined surface — no glassmorphism, just subtle elevation */
+  /* Surface cards with glass + glow */
   .surface {
     @apply rounded-2xl border border-border;
-    background: hsl(var(--card));
-    transition: border-color 0.4s ease, transform 0.4s ease;
+    background: hsla(var(--card), 0.85);
+    backdrop-filter: blur(16px);
+    transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
   }
 
   .surface:hover {
-    border-color: hsla(var(--primary), 0.2);
+    border-color: hsla(var(--primary), 0.15);
+    box-shadow: 0 0 40px hsla(var(--primary), 0.03);
   }
 
   .surface-interactive {
-    @apply surface;
-    cursor: pointer;
+    @apply surface cursor-pointer;
   }
 
   .surface-interactive:hover {
     transform: translateY(-2px);
-    border-color: hsla(var(--primary), 0.3);
-    box-shadow: 0 16px 48px hsla(var(--primary), 0.04);
+    border-color: hsla(var(--primary), 0.25);
+    box-shadow: 0 16px 48px hsla(var(--primary), 0.06), 0 0 60px hsla(var(--accent), 0.03);
   }
 
-  /* Accent dot */
+  /* Glow surface variant */
+  .surface-glow {
+    @apply surface;
+    box-shadow: inset 0 1px 0 hsla(var(--primary), 0.05);
+  }
+
+  .surface-glow:hover {
+    box-shadow: 
+      inset 0 1px 0 hsla(var(--primary), 0.1),
+      0 0 60px hsla(var(--primary), 0.05),
+      0 0 120px hsla(var(--accent), 0.03);
+  }
+
+  /* Dots */
   .dot-live {
     @apply w-2 h-2 rounded-full;
     background: hsl(var(--primary));
@@ -111,22 +125,30 @@
     box-shadow: 0 0 8px hsla(var(--destructive), 0.5);
   }
 
-  /* Label / overline text */
+  .dot-accent {
+    @apply w-2 h-2 rounded-full;
+    background: hsl(var(--accent));
+    box-shadow: 0 0 8px hsla(var(--accent), 0.5);
+  }
+
+  /* Typography helpers */
   .label-overline {
     @apply text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground;
   }
 
-  /* Big number */
   .metric {
     @apply text-5xl font-display font-extrabold tracking-tight text-foreground;
   }
 
-  /* Accent highlight */
   .text-accent-primary {
     color: hsl(var(--primary));
   }
 
-  /* Pill badge */
+  .text-accent-secondary {
+    color: hsl(var(--accent));
+  }
+
+  /* Pills */
   .pill {
     @apply text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full;
   }
@@ -149,15 +171,27 @@
     color: hsl(var(--primary));
   }
 
-  /* Primary action button */
+  .pill-accent {
+    @apply pill;
+    background: hsla(var(--accent), 0.12);
+    color: hsl(var(--accent));
+  }
+
+  .pill-warning {
+    @apply pill;
+    background: hsla(var(--status-warning), 0.12);
+    color: hsl(var(--status-warning));
+  }
+
+  /* Buttons */
   .btn-primary {
     @apply px-6 py-3 rounded-xl text-sm font-semibold tracking-wide transition-all duration-300;
-    background: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    color: hsl(0 0% 100%);
   }
 
   .btn-primary:hover {
-    box-shadow: 0 0 24px hsla(var(--primary), 0.3), 0 8px 32px hsla(var(--primary), 0.15);
+    box-shadow: 0 0 30px hsla(var(--primary), 0.3), 0 0 60px hsla(var(--accent), 0.15);
     transform: translateY(-1px);
   }
 
@@ -165,7 +199,17 @@
     transform: translateY(0);
   }
 
-  /* Ghost button */
+  .btn-danger {
+    @apply px-6 py-3 rounded-xl text-sm font-semibold tracking-wide transition-all duration-300;
+    background: linear-gradient(135deg, hsl(var(--destructive)), hsl(0 72% 40%));
+    color: hsl(0 0% 100%);
+  }
+
+  .btn-danger:hover {
+    box-shadow: 0 0 30px hsla(var(--destructive), 0.3);
+    transform: translateY(-1px);
+  }
+
   .btn-ghost {
     @apply px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 border border-border text-muted-foreground;
   }
@@ -173,25 +217,27 @@
     @apply border-foreground/20 text-foreground;
   }
 
-  /* Nav item */
+  /* Nav */
   .nav-item {
     @apply w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-muted-foreground;
   }
   .nav-item:hover {
-    @apply text-foreground bg-secondary;
+    @apply text-foreground;
+    background: hsla(var(--primary), 0.06);
   }
   .nav-item-active {
-    @apply nav-item text-primary-foreground;
-    background: hsl(var(--primary));
+    @apply nav-item text-foreground;
+    background: hsla(var(--primary), 0.1);
+    border: 1px solid hsla(var(--primary), 0.15);
+    box-shadow: 0 0 20px hsla(var(--primary), 0.05);
   }
 
-  /* Divider */
   .divider {
     @apply h-px w-full;
     background: hsl(var(--border));
   }
 
-  /* Scanline overlay */
+  /* Background effects */
   .scanlines::after {
     content: '';
     position: absolute;
@@ -201,17 +247,25 @@
       0deg,
       transparent,
       transparent 2px,
-      hsla(var(--primary), 0.01) 2px,
-      hsla(var(--primary), 0.01) 4px
+      hsla(var(--primary), 0.008) 2px,
+      hsla(var(--primary), 0.008) 4px
     );
   }
 
-  /* Wireframe grid background */
   .grid-bg {
     background-image:
-      linear-gradient(hsla(var(--primary), 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, hsla(var(--primary), 0.03) 1px, transparent 1px);
+      linear-gradient(hsla(var(--primary), 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, hsla(var(--primary), 0.025) 1px, transparent 1px);
     background-size: 60px 60px;
+  }
+
+  /* Glow text */
+  .glow-text {
+    text-shadow: 0 0 20px hsla(var(--primary), 0.5), 0 0 40px hsla(var(--primary), 0.2);
+  }
+
+  .glow-text-accent {
+    text-shadow: 0 0 20px hsla(var(--accent), 0.5), 0 0 40px hsla(var(--accent), 0.2);
   }
 }
 
@@ -230,10 +284,29 @@
   to { opacity: 1; transform: translateX(0); }
 }
 
+@keyframes scanLine {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes eyeScan {
+  0%, 100% { transform: scaleY(1); opacity: 0.8; }
+  50% { transform: scaleY(0.1); opacity: 1; }
+}
+
+@keyframes radarSweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .animate-count-up {
   animation: countUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-slide-left {
   animation: slideInFromLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-radar {
+  animation: radarSweep 3s linear infinite;
 }
